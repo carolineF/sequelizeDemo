@@ -1,23 +1,71 @@
 'use strict';
 
 module.exports = {
-  up: function (queryInterface, Sequelize) {
-    /*
-      Add altering commands here.
-      Return a promise to correctly handle asynchronicity.
+    up: function(migration, DataTypes) {
+        migration.createTable(
+            'Classes',{
+              id: {
+                  type: DataTypes.INTEGER,
+                  primaryKey: true,
+                  autoIncrement: true
+              },
+              createdAt: {
+                  type: DataTypes.DATE
+              },
+              updatedAt: {
+                  type: DataTypes.DATE
+              },
+              className: DataTypes.STRING
+            } ,{
+                engine: 'MYISAM',
+                charset: 'latin1'
+            });
+            migration.createTable(
+            'Students', {
+                id: {
+                    type: DataTypes.INTEGER,
+                    primaryKey: true,
+                    autoIncrement: true
+                },
+                createdAt: {
+                    type: DataTypes.DATE
+                },
+                updatedAt: {
+                    type: DataTypes.DATE
+                },
+                name: DataTypes.STRING,
+                sex: DataTypes.ENUM('male', 'female'),
+                ClassId: {
+                  type: DataTypes.INTEGER,
+                  references: 'Classes',
+                  referencesKey: 'id'
+                }
+            },{
+                engine: 'MYISAM',
+                charset: 'latin1'
+            });
+            migration.createTable(
+            'Courses', {
+                id: {
+                    type: DataTypes.INTEGER,
+                    primaryKey: true,
+                    autoIncrement: true
+                },
+                createdAt: {
+                    type: DataTypes.DATE
+                },
+                updatedAt: {
+                    type: DataTypes.DATE
+                },
+                CourseName: DataTypes.STRING,
+            },{
+                engine: 'MYISAM',
+                charset: 'latin1'
+            });
+    },
 
-      Example:
-      return queryInterface.createTable('users', { id: Sequelize.INTEGER });
-    */
-  },
+    down: function(migration, DataTypes) {
+        migration.dropTable('demo')
 
-  down: function (queryInterface, Sequelize) {
-    /*
-      Add reverting commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.dropTable('users');
-    */
-  }
+    }
 };
